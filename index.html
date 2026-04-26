@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에이전틱 AI와 지능 폭발 | 광운대학교 한국어 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* 광운대학교 공식 컬러 */
+  --kw-red:#C8102E;
+  --kw-dark:#9B0C22;
+  --kw-light:#E8374F;
+  --kw-faint:#FFF0F2;
+  --kw-navy:#003B71;
+  --kw-navy2:#002850;
+  --kw-navy-light:#1A5FA0;
+  --kw-gold:#B8973A;
+  --kw-gold-l:#D4AF5A;
+  --bg:#F8F7F5;
+  --bg2:#F1EFE9;
+  --white:#FFFFFF;
+  --t1:#1A1A1A;--t2:#444;--t3:#777;
+  --border:#E0DBD4;
+  --green:#16A34A;--amber:#D97706;--purple:#6D28D9;
+  --r:12px;--rl:20px;
+  --tr:all .3s cubic-bezier(.4,0,.2,1);
+  --sh:0 2px 16px rgba(0,0,0,.07);
+  --sh2:0 12px 40px rgba(0,0,0,.13);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--t1);line-height:1.7;overflow-x:hidden}
+
+/* PROGRESS */
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--kw-red),var(--kw-navy),var(--kw-gold));z-index:9999;width:0;transition:width .1s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;background:rgba(0,43,112,.97);backdrop-filter:blur(18px);z-index:1000;padding:0 2rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:white;font-family:'Noto Serif KR',serif;font-weight:700;font-size:.9rem}
+.nav-mark{width:32px;height:32px;background:var(--kw-red);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:white;flex-shrink:0}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.6);font-size:.8rem;font-weight:500;transition:var(--tr);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--kw-gold-l);transform:scaleX(0);transition:var(--tr)}
+.nav-links a:hover{color:white}
+.nav-links a:hover::after{transform:scaleX(1)}
+.ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.ham span{display:block;width:22px;height:2px;background:white;border-radius:2px}
+.mob{display:none;position:fixed;top:60px;left:0;right:0;background:var(--kw-navy2);padding:1.5rem 2rem;z-index:999;flex-direction:column;gap:1rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.mob.open{display:flex}
+.mob a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.92rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;background:linear-gradient(150deg,#001830 0%,#003B71 45%,#1a0810 100%);display:flex;align-items:center;position:relative;overflow:hidden;padding-top:60px}
+.hero-orb1{position:absolute;width:700px;height:700px;background:radial-gradient(ellipse,rgba(200,16,46,.22) 0%,transparent 65%);top:-150px;right:-100px;animation:ob 11s ease-in-out infinite}
+.hero-orb2{position:absolute;width:500px;height:500px;background:radial-gradient(ellipse,rgba(0,59,113,.4) 0%,transparent 65%);bottom:-100px;left:-80px;animation:ob 15s ease-in-out infinite reverse}
+.hero-orb3{position:absolute;width:300px;height:300px;background:radial-gradient(ellipse,rgba(184,151,58,.15) 0%,transparent 65%);top:40%;left:30%;animation:ob 9s ease-in-out infinite 3s}
+@keyframes ob{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.08) rotate(4deg)}}
+.hero-net{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px}
+.hero-content{max-width:1240px;margin:0 auto;padding:7rem 2rem 5rem;position:relative;z-index:1;display:grid;grid-template-columns:1fr 360px;gap:4rem;align-items:center}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(200,16,46,.18);border:1px solid rgba(200,16,46,.35);color:#FCA5A5;padding:5px 14px;border-radius:100px;font-size:.73rem;font-weight:600;margin-bottom:1.5rem;letter-spacing:.5px}
+.pill-dot{width:6px;height:6px;background:#FCA5A5;border-radius:50%;animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(1.9rem,4vw,3.1rem);color:white;line-height:1.25;margin-bottom:1.25rem}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--kw-gold-l),#FCA5A5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:.93rem;color:rgba(255,255,255,.62);line-height:1.9;margin-bottom:2.5rem;max-width:540px}
+.hero-btns{display:flex;gap:.875rem;flex-wrap:wrap}
+.bp{background:var(--kw-red);color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;border:2px solid var(--kw-red);transition:var(--tr);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.bp:hover{background:var(--kw-dark);border-color:var(--kw-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,16,46,.4)}
+.bs{background:transparent;color:rgba(255,255,255,.8);padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;border:2px solid rgba(255,255,255,.22);transition:var(--tr);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.bs:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.5);transform:translateY(-2px)}
+
+/* HERO PANEL */
+.hero-panel{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--rl);padding:1.75rem;backdrop-filter:blur(12px)}
+.hp-title{font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--kw-gold-l);margin-bottom:1.25rem}
+.hp-row{display:flex;align-items:flex-start;justify-content:space-between;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06);gap:.5rem}
+.hp-row:last-child{border-bottom:none}
+.hp-lbl{font-size:.78rem;color:rgba(255,255,255,.55);flex:1}
+.hp-val{font-family:'Playfair Display',serif;font-size:1.3rem;color:white;font-weight:700;text-align:right;flex-shrink:0}
+.hp-val.r{color:#F87171}.hp-val.g{color:#86EFAC}.hp-val.a{color:var(--kw-gold-l)}.hp-val.b{color:#93C5FD}
+
+/* ── CONCEPT STRIP ── */
+.concept-strip{background:linear-gradient(135deg,var(--kw-red) 0%,var(--kw-dark) 50%,#6B0D1E 100%);padding:3rem 2rem;position:relative;overflow:hidden}
+.concept-strip::before{content:'🧠';position:absolute;right:3rem;top:50%;transform:translateY(-50%);font-size:9rem;opacity:.07}
+.concept-strip-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
+.concept-strip h2{font-family:'Noto Serif KR',serif;font-size:1.5rem;color:white;margin-bottom:.6rem}
+.concept-strip p{color:rgba(255,255,255,.72);font-size:.88rem;line-height:1.85;max-width:640px}
+.concept-chips{display:flex;gap:.75rem;flex-wrap:wrap;flex-shrink:0}
+.chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:white;padding:7px 14px;border-radius:100px;font-size:.78rem;font-weight:600;white-space:nowrap}
+
+/* ── SECTIONS ── */
+section{padding:5.5rem 2rem}
+.container{max-width:1240px;margin:0 auto}
+.sl{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--kw-red);margin-bottom:.875rem}
+.sl::before{content:'';display:block;width:20px;height:2px;background:var(--kw-red);border-radius:2px}
+h2.st{font-family:'Noto Serif KR',serif;font-size:clamp(1.5rem,3vw,2.3rem);line-height:1.3;margin-bottom:1rem}
+.sd{color:var(--t2);font-size:.875rem;max-width:660px;line-height:1.85;margin-bottom:3rem}
+
+/* ── EVOLUTION TIMELINE ── */
+.evo-section{background:linear-gradient(180deg,var(--kw-navy2) 0%,#001020 100%);color:white}
+.evo-section .sl{color:var(--kw-gold-l)}
+.evo-section .sl::before{background:var(--kw-gold-l)}
+.evo-section h2.st{color:white}
+.evo-section .sd{color:rgba(255,255,255,.62)}
+.evo-scroll{display:flex;gap:1.5rem;overflow-x:auto;padding-bottom:1.5rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.evo-scroll::-webkit-scrollbar{height:4px}
+.evo-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:4px}
+.evo-scroll::-webkit-scrollbar-thumb{background:var(--kw-red);border-radius:4px}
+.evo-card{flex:0 0 280px;scroll-snap-align:start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--rl);padding:1.75rem;transition:var(--tr);position:relative;overflow:hidden}
+.evo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.evo-card.e1::before{background:linear-gradient(90deg,#86EFAC,#34D399)}
+.evo-card.e2::before{background:linear-gradient(90deg,#93C5FD,#60A5FA)}
+.evo-card.e3::before{background:linear-gradient(90deg,var(--kw-gold-l),var(--kw-gold))}
+.evo-card.e4::before{background:linear-gradient(90deg,#F87171,var(--kw-red))}
+.evo-card.e5::before{background:linear-gradient(90deg,#C4B5FD,#A78BFA)}
+.evo-card:hover{background:rgba(255,255,255,.09);transform:translateY(-3px)}
+.evo-era{font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
+.evo-card.e1 .evo-era{color:#86EFAC}
+.evo-card.e2 .evo-era{color:#93C5FD}
+.evo-card.e3 .evo-era{color:var(--kw-gold-l)}
+.evo-card.e4 .evo-era{color:#F87171}
+.evo-card.e5 .evo-era{color:#C4B5FD}
+.evo-icon{font-size:2rem;margin-bottom:.875rem}
+.evo-card h3{font-family:'Noto Serif KR',serif;font-size:1rem;color:white;margin-bottom:.625rem}
+.evo-card p{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.75}
+.evo-arrow{text-align:center;color:rgba(255,255,255,.2);font-size:1.5rem;display:flex;align-items:center;margin:0 .25rem}
+
+/* ── THREE IDEAS ── */
+.ideas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:2.5rem}
+.idea-card{background:white;border-radius:var(--rl);padding:2rem;box-shadow:var(--sh);border:1px solid var(--border);transition:var(--tr);position:relative;overflow:hidden}
+.idea-card::after{content:'';position:absolute;inset:0;opacity:0;transition:var(--tr)}
+.idea-card:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.idea-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.idea-card.i1::before{background:linear-gradient(90deg,var(--kw-red),var(--kw-light))}
+.idea-card.i2::before{background:linear-gradient(90deg,var(--kw-navy),var(--kw-navy-light))}
+.idea-card.i3::before{background:linear-gradient(90deg,var(--kw-gold),var(--kw-gold-l))}
+.idea-num{font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;line-height:1;opacity:.07;position:absolute;top:.5rem;right:1rem}
+.idea-card.i1 .idea-num{color:var(--kw-red)}
+.idea-card.i2 .idea-num{color:var(--kw-navy)}
+.idea-card.i3 .idea-num{color:var(--kw-gold)}
+.idea-icon{font-size:1.8rem;margin-bottom:.875rem}
+.idea-tag{font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
+.idea-card.i1 .idea-tag{color:var(--kw-red)}
+.idea-card.i2 .idea-tag{color:var(--kw-navy)}
+.idea-card.i3 .idea-tag{color:var(--kw-gold)}
+.idea-card h3{font-family:'Noto Serif KR',serif;font-size:1.08rem;margin-bottom:.75rem}
+.idea-card p{font-size:.84rem;color:var(--t2);line-height:1.8}
+.idea-expand{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:.82rem;color:var(--t2);line-height:1.8}
+.idea-card.expanded .idea-expand{display:block;animation:fu .3s ease}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.idea-toggle{margin-top:1rem;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-family:'Noto Sans KR',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:var(--tr);color:var(--t3)}
+.idea-card.i1 .idea-toggle:hover{background:var(--kw-faint);border-color:var(--kw-red);color:var(--kw-red)}
+.idea-card.i2 .idea-toggle:hover{background:#EFF6FF;border-color:var(--kw-navy);color:var(--kw-navy)}
+.idea-card.i3 .idea-toggle:hover{background:#FFFBEB;border-color:var(--kw-gold);color:var(--kw-gold)}
+
+/* ── SOCIETY OF THOUGHT VISUALIZER ── */
+.sot-section{background:linear-gradient(160deg,#001830 0%,var(--kw-navy2) 100%);color:white}
+.sot-section .sl{color:var(--kw-gold-l)}
+.sot-section .sl::before{background:var(--kw-gold-l)}
+.sot-section h2.st{color:white}
+.sot-section .sd{color:rgba(255,255,255,.62)}
+.sot-demo{max-width:800px;margin:0 auto;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--rl);padding:2rem}
+.sot-title{font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--kw-gold-l);margin-bottom:1.5rem;text-align:center}
+.sot-topic{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.5rem;text-align:center;font-size:.88rem;color:white;font-family:'Noto Serif KR',serif}
+.sot-input-row{display:flex;gap:.75rem;margin-bottom:1.5rem}
+.sot-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:.75rem 1rem;color:white;font-family:'Noto Sans KR',sans-serif;font-size:.85rem;outline:none;transition:var(--tr)}
+.sot-input:focus{border-color:rgba(200,16,46,.5);background:rgba(255,255,255,.09)}
+.sot-input::placeholder{color:rgba(255,255,255,.3)}
+.sot-btn{background:var(--kw-red);color:white;border:none;border-radius:8px;padding:.75rem 1.25rem;font-family:'Noto Sans KR',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:var(--tr);white-space:nowrap}
+.sot-btn:hover{background:var(--kw-dark);transform:translateY(-1px)}
+.sot-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.sot-chat{display:flex;flex-direction:column;gap:.875rem;min-height:200px;max-height:360px;overflow-y:auto;padding:4px}
+.sot-chat::-webkit-scrollbar{width:3px}
+.sot-chat::-webkit-scrollbar-thumb{background:var(--kw-red);border-radius:3px}
+.sot-msg{border-radius:var(--r);padding:.875rem 1.1rem;font-size:.83rem;line-height:1.75;animation:fu .4s ease both}
+.sot-msg.a{background:rgba(200,16,46,.15);border:1px solid rgba(200,16,46,.25);border-left:3px solid var(--kw-red)}
+.sot-msg.b{background:rgba(0,59,113,.3);border:1px solid rgba(0,59,113,.4);border-left:3px solid var(--kw-navy-light)}
+.sot-msg.c{background:rgba(184,151,58,.15);border:1px solid rgba(184,151,58,.25);border-left:3px solid var(--kw-gold)}
+.sot-msg.sys{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);text-align:center;font-style:italic;color:rgba(255,255,255,.45)}
+.sot-speaker{font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.3rem}
+.sot-msg.a .sot-speaker{color:#FCA5A5}
+.sot-msg.b .sot-speaker{color:#93C5FD}
+.sot-msg.c .sot-speaker{color:var(--kw-gold-l)}
+.sot-msg-text{color:rgba(255,255,255,.82)}
+.sot-empty{text-align:center;color:rgba(255,255,255,.3);padding:3rem;font-size:.85rem}
+.sot-topics{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.sot-topic-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:rgba(255,255,255,.65);padding:5px 12px;border-radius:100px;font-size:.75rem;cursor:pointer;transition:var(--tr)}
+.sot-topic-btn:hover{background:rgba(255,255,255,.13);color:white}
+
+/* ── FAQ ── */
+.faq-list{max-width:780px;margin-top:2.5rem}
+.fi{border:1px solid var(--border);border-radius:var(--r);margin-bottom:.7rem;overflow:hidden;background:white;transition:var(--tr)}
+.fi.open{box-shadow:0 4px 20px rgba(0,59,113,.12);border-color:rgba(0,59,113,.35)}
+.fq{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.15rem 1.4rem;background:none;border:none;text-align:left;font-family:'Noto Sans KR',sans-serif;font-size:.91rem;font-weight:600;cursor:pointer;color:var(--t1);gap:1rem;transition:var(--tr)}
+.fi.open .fq{color:var(--kw-navy)}
+.fi-icon{width:26px;height:26px;flex-shrink:0;background:#EFF6FF;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--kw-navy);font-size:.88rem;font-weight:700;transition:var(--tr)}
+.fi.open .fi-icon{background:var(--kw-navy);color:white;transform:rotate(45deg)}
+.fa{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+.fa-body{padding:0 1.4rem 1.4rem;border-top:1px solid var(--border);padding-top:1.15rem;font-size:.845rem;color:var(--t2);line-height:1.85}
+.fa-body strong{color:var(--kw-navy)}
+
+/* ── CENTAUR DIAGRAM ── */
+.centaur-section{background:var(--bg2)}
+.centaur-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-top:2.5rem}
+.cc{background:white;border-radius:var(--rl);padding:1.75rem;box-shadow:var(--sh);border:1px solid var(--border);transition:var(--tr);text-align:center;position:relative}
+.cc:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.cc-ring{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin:0 auto 1rem;border:3px solid transparent}
+.cc.human .cc-ring{background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-color:#93C5FD}
+.cc.ai .cc-ring{background:linear-gradient(135deg,var(--kw-faint),#FFE4E8);border-color:var(--kw-light)}
+.cc.centaur .cc-ring{background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border-color:var(--kw-gold-l)}
+.cc.inst .cc-ring{background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border-color:#A78BFA}
+.cc h3{font-family:'Noto Serif KR',serif;font-size:.98rem;margin-bottom:.625rem}
+.cc p{font-size:.8rem;color:var(--t2);line-height:1.7}
+.cc-tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.68rem;font-weight:700;margin-top:.75rem}
+.cc.human .cc-tag{background:#DBEAFE;color:#1D4ED8}
+.cc.ai .cc-tag{background:var(--kw-faint);color:var(--kw-dark)}
+.cc.centaur .cc-tag{background:#FEF3C7;color:#B45309}
+.cc.inst .cc-tag{background:#EDE9FE;color:#6D28D9}
+
+/* ── IMPLICATIONS ── */
+.impl-section{background:linear-gradient(180deg,var(--kw-navy2) 0%,#000D1A 100%);color:white}
+.impl-section .sl{color:var(--kw-gold-l)}
+.impl-section .sl::before{background:var(--kw-gold-l)}
+.impl-section h2.st{color:white}
+.impl-section .sd{color:rgba(255,255,255,.62)}
+.impl-accordion{display:flex;flex-direction:column;gap:.75rem;max-width:880px}
+.ia{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);overflow:hidden;transition:var(--tr)}
+.ia.open{background:rgba(255,255,255,.08);border-color:rgba(200,16,46,.35)}
+.iq{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 1.5rem;background:none;border:none;text-align:left;font-family:'Noto Sans KR',sans-serif;font-size:.92rem;font-weight:600;cursor:pointer;color:white;gap:1rem;transition:var(--tr)}
+.ia.open .iq{color:var(--kw-gold-l)}
+.ia-icon{width:26px;height:26px;flex-shrink:0;background:rgba(255,255,255,.08);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);font-weight:700;transition:var(--tr)}
+.ia.open .ia-icon{background:var(--kw-red);color:white;transform:rotate(45deg)}
+.ians{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+.ians-body{padding:0 1.5rem 1.5rem;border-top:1px solid rgba(255,255,255,.08);padding-top:1.15rem;font-size:.85rem;color:rgba(255,255,255,.68);line-height:1.85}
+.ians-body strong{color:var(--kw-gold-l)}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* ── CITE ── */
+.cite-section{background:#020810;color:rgba(255,255,255,.8)}
+.cite-section .sl{color:var(--kw-gold-l)}
+.cite-section .sl::before{background:var(--kw-gold-l)}
+.cite-section h2.st{color:white}
+.cite-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:var(--rl);padding:2.5rem;font-family:'Georgia',serif;font-size:.875rem;line-height:2;color:rgba(255,255,255,.77);position:relative;margin-bottom:1.25rem}
+.cite-box::before{content:'APA';position:absolute;top:-11px;left:18px;background:var(--kw-gold);color:white;padding:2px 10px;border-radius:100px;font-family:'Noto Sans KR',sans-serif;font-size:.67rem;font-weight:700;letter-spacing:1px}
+.cbtn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.62);padding:9px 18px;border-radius:8px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;font-size:.8rem;transition:var(--tr);display:inline-flex;align-items:center;gap:7px}
+.cbtn:hover{background:rgba(255,255,255,.13);color:white}
+.cbtn.done{background:rgba(22,163,74,.18);border-color:rgba(22,163,74,.4);color:#86EFAC}
+.info-box{margin-top:1.75rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:1.5rem}
+.info-box p{font-size:.83rem;color:rgba(255,255,255,.6);line-height:2}
+.info-box a{color:var(--kw-gold-l);text-decoration:none}
+
+/* ── BTT ── */
+#btt{position:fixed;bottom:2rem;right:2rem;width:42px;height:42px;background:var(--kw-navy);color:white;border:none;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 4px 16px rgba(0,59,113,.5);transition:var(--tr);z-index:100}
+#btt:hover{background:var(--kw-red);transform:translateY(-3px)}
+#btt.show{display:flex}
+
+footer{background:#010508;color:rgba(255,255,255,.35);text-align:center;padding:2rem;font-size:.76rem}
+footer a{color:rgba(200,16,46,.7);text-decoration:none}
+
+@media(max-width:900px){.hero-content{grid-template-columns:1fr}.hero-panel{display:none}.concept-strip-inner{grid-template-columns:1fr}.evo-card{flex:0 0 250px}}
+@media(max-width:768px){.nav-links{display:none}.ham{display:flex}section{padding:4rem 1.25rem}.hero-content{padding:5rem 1.25rem 4rem}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<button id="btt" aria-label="맨 위로">↑</button>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-mark">KW</div>
+      에이전틱 AI · 지능 폭발
+    </a>
+    <ul class="nav-links">
+      <li><a href="#evolution">지능의 진화</a></li>
+      <li><a href="#ideas">3대 핵심 개념</a></li>
+      <li><a href="#sot">사고의 사회</a></li>
+      <li><a href="#centaur">센타우르</a></li>
+      <li><a href="#implications">시사점</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#citation">출처</a></li>
+    </ul>
+    <button class="ham" id="ham"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob" id="mob">
+  <a href="#evolution" onclick="cm()">지능의 진화</a>
+  <a href="#ideas" onclick="cm()">3대 핵심 개념</a>
+  <a href="#sot" onclick="cm()">사고의 사회</a>
+  <a href="#centaur" onclick="cm()">센타우르</a>
+  <a href="#implications" onclick="cm()">시사점</a>
+  <a href="#faq" onclick="cm()">FAQ</a>
+  <a href="#citation" onclick="cm()">출처</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-orb3"></div>
+  <div class="hero-net"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-pill"><div class="pill-dot"></div>arXiv:2603.20639 · Google · 2026년 3월</div>
+      <h1>특이점은<br><em>하나의 거대한 마음</em>이<br>아니다</h1>
+      <p class="hero-sub">Google의 Evans·Bratton·Agüera y Arcas가 제시하는 새로운 비전 — 다음 지능 폭발은 단일 초지능이 아닌, 수조 개의 AI 에이전트와 인간이 함께 구성하는 <strong style="color:rgba(255,255,255,.9)">복수적·사회적 시스템</strong>에서 비롯될 것입니다.</p>
+      <div class="hero-btns">
+        <a href="#ideas" class="bp">핵심 개념 탐색 →</a>
+        <a href="#sot" class="bs">사고의 사회 체험</a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hp-title">📌 논문 핵심 주장</div>
+      <div class="hp-row"><span class="hp-lbl">AI 특이점의 형태</span><span class="hp-val b" style="font-size:.85rem;font-family:'Noto Serif KR',serif">단일X → 복수·사회적O</span></div>
+      <div class="hp-row"><span class="hp-lbl">지능의 본질</span><span class="hp-val a" style="font-size:.85rem;font-family:'Noto Serif KR',serif">집단적·관계적</span></div>
+      <div class="hp-row"><span class="hp-lbl">핵심 발견</span><span class="hp-val g" style="font-size:.82rem;font-family:'Noto Serif KR',serif">사고의 사회(RL 훈련)</span></div>
+      <div class="hp-row"><span class="hp-lbl">인간-AI 관계</span><span class="hp-val a" style="font-size:.85rem;font-family:'Noto Serif KR',serif">센타우르 복합체</span></div>
+      <div class="hp-row"><span class="hp-lbl">정렬 패러다임</span><span class="hp-val b" style="font-size:.85rem;font-family:'Noto Serif KR',serif">RLHF → 제도적 정렬</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT STRIP -->
+<div class="concept-strip">
+  <div class="concept-strip-inner">
+    <div>
+      <h2>❝ 어떤 마음도 섬이 아니다 ❞</h2>
+      <p>AI의 다음 지능 폭발은 냉정한 실리콘 점으로 모든 인지를 통합하는 하나의 거대한 마음이 아닙니다. 오히려 수조 개의 AI 에이전트와 80억 명의 인간이 상호작용하는 <strong style="color:white">조합적 사회</strong>가 복잡해지는 방식 — 단일한 메타마인드가 아닌 도시처럼 성장하는 지능 — 에서 비롯될 것입니다.</p>
+    </div>
+    <div class="concept-chips">
+      <div class="chip">📡 에이전틱 AI</div>
+      <div class="chip">🧠 사고의 사회</div>
+      <div class="chip">🏛️ 제도적 정렬</div>
+      <div class="chip">🤝 센타우르 협업</div>
+    </div>
+  </div>
+</div>
+
+<!-- EVOLUTION TIMELINE -->
+<section class="evo-section" id="evolution">
+  <div class="container">
+    <span class="sl">지능 폭발의 역사</span>
+    <h2 class="st">지능은 늘 사회적이었다</h2>
+    <p class="sd">저자들은 AI를 인류 역사의 거대한 지능 폭발 계보 위에 놓습니다. 각 전환점은 개인의 인지 업그레이드가 아닌, 새로운 사회적 집합 인지 단위의 출현이었습니다. 가로로 스크롤하세요.</p>
+    <div class="evo-scroll">
+      <div class="evo-card e1">
+        <div class="evo-icon">🦍</div>
+        <div class="evo-era">진화적 전환 1</div>
+        <h3>영장류 집단 지능</h3>
+        <p>영장류의 지능은 서식지 난이도가 아닌 사회 집단 크기에 비례해 확장됐습니다(던바의 수). 개체의 뇌가 아닌 집단이 지능의 단위였습니다.</p>
+      </div>
+      <div class="evo-card e2">
+        <div class="evo-icon">💬</div>
+        <div class="evo-era">진화적 전환 2</div>
+        <h3>언어와 문화적 래칫</h3>
+        <p>토마셀로의 "문화적 래칫" — 언어는 개인이 전체를 재구성할 필요 없이 지식을 세대를 넘어 축적할 수 있게 했습니다. 집단 지식의 역전 불가능한 축적.</p>
+      </div>
+      <div class="evo-card e3">
+        <div class="evo-icon">📜</div>
+        <div class="evo-era">진화적 전환 3</div>
+        <h3>문자·법·관료제</h3>
+        <p>사회 지능이 인프라로 외재화됐습니다. 수메르 서기는 자신이 운영하는 곡물 회계 시스템의 거시경제적 기능을 이해하지 못했지만, 시스템 자체는 그보다 기능적으로 더 지능적이었습니다.</p>
+      </div>
+      <div class="evo-card e4">
+        <div class="evo-icon">🖥️</div>
+        <div class="evo-era">진화적 전환 4</div>
+        <h3>대형 언어 모델</h3>
+        <p>LLM은 인간 사회적 인지의 누적 출력물로 훈련됩니다 — 추상적 추론이 아닌 외재화된 형태의 사회 지능이 실리콘이라는 새로운 기질에서 자신을 만나는 것입니다.</p>
+      </div>
+      <div class="evo-card e5">
+        <div class="evo-icon">🌐</div>
+        <div class="evo-era">진화적 전환 5 (현재)</div>
+        <h3>에이전틱 AI 생태계</h3>
+        <p>80억 명의 인간과 수조 개의 AI 에이전트가 상호작용하는 조합적 사회. 단일한 메타마인드의 상승이 아니라 도시처럼 성장하는 지능입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE IDEAS -->
+<section id="ideas">
+  <div class="container">
+    <span class="sl">3대 핵심 개념</span>
+    <h2 class="st">논문이 제시하는 새로운 틀</h2>
+    <p class="sd">Evans, Bratton, Agüera y Arcas가 주장하는 세 가지 핵심 통찰. 각 카드를 클릭해 깊이 탐색하세요.</p>
+    <div class="ideas-grid">
+
+      <div class="idea-card i1">
+        <div class="idea-num">01</div>
+        <div class="idea-icon">🧠</div>
+        <div class="idea-tag">핵심 발견</div>
+        <h3>사고의 사회 (Society of Thought)</h3>
+        <p>DeepSeek-R1, QwQ-32B 같은 프론티어 추론 모델은 단순히 "더 오래 생각"해서 개선되지 않습니다. 대신 자신의 사고 연쇄 내에서 복잡한 다중 에이전트 상호작용을 시뮬레이션합니다.</p>
+        <button class="idea-toggle" onclick="toggleIdea(this)">+ 더 보기</button>
+        <div class="idea-expand">
+          이 모델들은 논쟁하고, 질문하고, 검증하고, 조화를 이루는 별개의 인지 관점들 사이의 내부 토론을 자발적으로 생성합니다. 놀라운 점은 이것이 <strong>훈련되지 않은 창발적 행동</strong>이라는 것입니다. 강화 학습이 추론 정확도만을 보상할 때, 모델들은 자발적으로 대화적·다관점적 행동을 증가시킵니다. AI는 수세기의 인식론과 수십 년의 인지과학이 시사한 것 — 강건한 추론은 사회적 과정이라는 것 — 을 최적화 압력만으로 재발견하고 있습니다.
+        </div>
+      </div>
+
+      <div class="idea-card i2">
+        <div class="idea-num">02</div>
+        <div class="idea-icon">🤝</div>
+        <div class="idea-tag">새로운 행위자</div>
+        <h3>센타우르 복합체 (Centaur Configurations)</h3>
+        <p>우리는 인간-AI 센타우르의 시대에 진입했습니다. 순수하게 인간도, 순수하게 기계도 아닌 복합 행위자. 한 명의 인간이 많은 AI 에이전트를 지휘하고, 하나의 AI가 많은 인간을 섬기며, 많은 인간과 많은 AI가 변화하는 구성으로 협력합니다.</p>
+        <button class="idea-toggle" onclick="toggleIdea(this)">+ 더 보기</button>
+        <div class="idea-expand">
+          에이전트는 이제 스스로를 갱신하고 분기할 수 있습니다 — 두 버전으로 분리되어 서로 상호작용합니다. 복잡한 문제에 직면한 에이전트는 새로운 복사본을 시작하고, 차별화하여 하위 작업을 할당한 다음 결과를 재결합할 수 있습니다. 무수히 많은 인간으로 구성된 기업이나 국가가 이미 단일한 법적 지위를 갖고 어떤 개인 구성원도 완전히 통제할 수 없는 집단 행위성을 갖는 것처럼, 에이전틱 AI도 수십억 개의 상호작용하는 마음들의 규모에서 유사한 것을 가능하게 합니다.
+        </div>
+      </div>
+
+      <div class="idea-card i3">
+        <div class="idea-num">03</div>
+        <div class="idea-icon">🏛️</div>
+        <div class="idea-tag">새로운 정렬 패러다임</div>
+        <h3>제도적 정렬 (Institutional Alignment)</h3>
+        <p>RLHF(인간 피드백 강화 학습)는 부모-자녀 수정 모델을 닮았습니다 — 근본적으로 양자 관계이며 수십억 개의 에이전트로 확장되기 어렵습니다. 사회 지능 관점은 대안을 제시합니다: 제도적 정렬.</p>
+        <button class="idea-toggle" onclick="toggleIdea(this)">+ 더 보기</button>
+        <div class="idea-expand">
+          인간 사회가 개인의 덕성이 아닌 역할과 규범으로 정의된 <strong>영속적인 제도적 틀</strong>에 의존하듯 — 법정, 시장, 관료제 — 확장 가능한 AI 생태계도 디지털 등가물을 필요로 합니다. 어떤 에이전트의 정체성보다 역할 프로토콜을 이행하는 능력이 중요합니다. 법정이 "판사," "변호사," "배심원"이 누구를 점유하든 독립적으로 잘 정의된 슬롯이기 때문에 기능하는 것처럼. 고위험 결정에 AI 시스템이 배치될 때, "감사자를 감사하는 것은 누구인가?"라는 질문은 헌법적 구조를 필요로 합니다.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SOCIETY OF THOUGHT VISUALIZER -->
+<section class="sot-section" id="sot">
+  <div class="container">
+    <span class="sl">인터랙티브 체험</span>
+    <h2 class="st">사고의 사회를 직접 경험해보세요</h2>
+    <p class="sd">AI 추론 모델 내부에서 일어나는 '사고의 사회'를 시뮬레이션합니다. 주제를 선택하거나 직접 입력하면 세 가지 인지 관점이 토론을 펼칩니다.</p>
+    <div class="sot-demo">
+      <div class="sot-title">🔬 사고의 사회 시뮬레이터</div>
+      <div class="sot-topics">
+        <button class="sot-topic-btn" onclick="setTopic('AI가 인간 일자리를 대체할 것인가?')">💼 AI와 일자리</button>
+        <button class="sot-topic-btn" onclick="setTopic('AGI는 인류에게 위협인가 기회인가?')">🤖 AGI의 미래</button>
+        <button class="sot-topic-btn" onclick="setTopic('AI 에이전트 사회에서 인간의 역할은?')">🧑 인간의 역할</button>
+        <button class="sot-topic-btn" onclick="setTopic('AI 거버넌스는 어떻게 설계해야 하나?')">🏛️ AI 거버넌스</button>
+      </div>
+      <div class="sot-input-row">
+        <input class="sot-input" id="sotInput" placeholder="토론 주제를 입력하세요..." maxlength="60">
+        <button class="sot-btn" id="sotBtn" onclick="startDebate()">토론 시작 ▶</button>
+      </div>
+      <div class="sot-chat" id="sotChat">
+        <div class="sot-empty">↑ 주제를 선택하거나 입력한 뒤 '토론 시작'을 클릭하세요<br><br>세 가지 인지 관점 (분석가 · 회의론자 · 종합자)이<br>내부 토론을 펼칩니다</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CENTAUR CONFIGURATIONS -->
+<section class="centaur-section" id="centaur">
+  <div class="container">
+    <span class="sl">센타우르 복합체</span>
+    <h2 class="st">인간과 AI의 새로운 관계 유형</h2>
+    <p class="sd">논문이 제시하는 다양한 인간-AI 복합 행위자의 형태. 어느 역할이 본인의 일상과 가장 가깝나요?</p>
+    <div class="centaur-grid">
+      <div class="cc human reveal">
+        <div class="cc-ring">👤</div>
+        <h3>지휘자 인간</h3>
+        <p>한 명의 인간이 다수의 AI 에이전트를 오케스트레이션합니다. 전략적 판단과 가치 판단은 인간이, 실행은 AI 에이전트들이 담당합니다.</p>
+        <span class="cc-tag">1인간 → 多에이전트</span>
+      </div>
+      <div class="cc ai reveal">
+        <div class="cc-ring">🤖</div>
+        <h3>AI 어시스턴트</h3>
+        <p>하나의 AI가 동시에 많은 인간을 섬깁니다. 개인화된 지원을 대규모로 제공하며, 각 인간의 맥락에 맞게 응답을 조정합니다.</p>
+        <span class="cc-tag">1에이전트 → 多인간</span>
+      </div>
+      <div class="cc centaur reveal">
+        <div class="cc-ring">🏇</div>
+        <h3>센타우르 협업</h3>
+        <p>다수의 인간과 다수의 AI가 변화하는 구성으로 협력합니다. 오늘날 복잡한 프로젝트와 지식 작업의 지배적 패턴이 되어가고 있습니다.</p>
+        <span class="cc-tag">多인간 ↔ 多에이전트</span>
+      </div>
+      <div class="cc inst reveal">
+        <div class="cc-ring">🏛️</div>
+        <h3>에이전트 제도</h3>
+        <p>역할 프로토콜로 정의된 AI-인간 제도적 구조. 누가 특정 역할을 맡든 시스템이 기능하는 "판사-변호사-배심원" 구조의 디지털 등가물입니다.</p>
+        <span class="cc-tag">역할 기반 시스템</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPLICATIONS ACCORDION -->
+<section class="impl-section" id="implications">
+  <div class="container">
+    <span class="sl">시사점과 전망</span>
+    <h2 class="st">이 논문이 말하는 앞으로의 세계</h2>
+    <p class="sd">에이전틱 AI 시대가 가져올 변화와 도전 과제들을 영역별로 탐색하세요.</p>
+    <div class="impl-accordion">
+
+      <div class="ia">
+        <button class="iq" onclick="toggleImpl(this)">
+          <span>🔬 과학 연구 — 팀 과학의 사회학이 AI 설계의 청사진이 된다</span>
+          <span class="ia-icon">+</span>
+        </button>
+        <div class="ians">
+          <div class="ians-body">
+            사회·조직과학은 100년간 팀 규모, 구성, 위계, 역할 분화, 갈등 규범, 제도, 네트워크 구조가 집단 성과를 어떻게 형성하는지 연구해왔습니다. 그런데 이 연구의 거의 어떤 것도 아직 AI 추론에 적용되지 않았습니다. 오늘날 추론 모델은 단일한 대화 — AI 타운홀 대화록 — 를 생성합니다. 그러나 효과적인 집단은 <strong>위계, 전문화, 분업, 구조화된 불일치</strong>를 보입니다. 브레인스토밍, 악마의 변호인 역할, 건설적 갈등이 우발적 창발 속성이 아닌 설계된 기능이 되는 아키텍처가 필요합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="ia">
+        <button class="iq" onclick="toggleImpl(this)">
+          <span>⚖️ 거버넌스 — AI 견제와 균형의 헌법적 구조</span>
+          <span class="ia-icon">+</span>
+        </button>
+        <div class="ians">
+          <div class="ians-body">
+            AI 시스템이 고위험 결정 — 고용, 선고, 급여 배분, 규제 집행 — 에 배치될 때, "감사자를 감사하는 것은 누구인가?"라는 질문은 피할 수 없습니다. 답은 <strong>헌법적 구조</strong>에 있을 수 있습니다. 정부는 투명성, 공정성, 적법 절차 — 민간 부문이 배치한 AI 시스템을 견제·균형하는 기능을 가진 — 라는 명시적으로 투자된 가치를 가진 AI 시스템이 필요합니다. 예를 들어, 노동부 AI는 채용 알고리즘의 불균등한 영향을 감사하고, 사법부 AI는 행정부 AI의 위험 평가가 헌법적 기준을 충족하는지 평가할 수 있습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="ia">
+        <button class="iq" onclick="toggleImpl(this)">
+          <span>📈 스케일링 — 원시 연산 확장을 넘어, 사회 시스템 설계로</span>
+          <span class="ia-icon">+</span>
+        </button>
+        <div class="ians">
+          <div class="ians-body">
+            이것은 스케일링에 대한 매우 다른 접근을 의미합니다. 에이전트의 원시 연산 용량을 확장하는 것만이 아니라, 실제 사회의 규모와 맥락 내에서 작동할 수 있는 시스템을 구축하는 것입니다. 이는 에이전트를 구축하는 것만큼 <strong>에이전트 제도를 구축하는 데 노력을 기울이는 것</strong>을 의미합니다. AI 정렬을 위한 지배적 패러다임 — RLHF — 은 근본적으로 이원론적이며 수십억 개의 에이전트로 확장될 수 없습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="ia">
+        <button class="iq" onclick="toggleImpl(this)">
+          <span>🌏 한국·아시아 맥락 — 집단주의 문화와 에이전틱 AI의 만남</span>
+          <span class="ia-icon">+</span>
+        </button>
+        <div class="ians">
+          <div class="ians-body">
+            이 논문의 "복수적·사회적 지능" 프레임은 한국과 동아시아의 집단주의 문화와 깊이 공명합니다. AI Index 2026(Stanford)에 따르면 한국은 <strong>1인당 AI 특허 세계 1위(14.3%)</strong>이며, AI가 일자리를 창출할 것이라는 낙관론이 70%에 달합니다. 한국의 반도체 기업(SK하이닉스·삼성)은 에이전틱 AI 시스템을 구동하는 HBM 메모리의 핵심 공급자입니다. 논문이 제시하는 "제도적 정렬" 개념은 한국의 AI 기본법과 직접적으로 연결됩니다 — AI 거버넌스를 법·제도로 설계한다는 점에서. 한국이 이미 G20에서 AI 관련 법안을 두 번째로 많이 통과시킨 것(17개)은 이 방향과 일치합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="ia">
+        <button class="iq" onclick="toggleImpl(this)">
+          <span>🎓 연구자·교육자 — AI 사회과학이라는 새 분야의 탄생</span>
+          <span class="ia-icon">+</span>
+        </button>
+        <div class="ians">
+          <div class="ians-body">
+            이 논문은 완전히 새로운 학제적 연구 분야를 열어젖힙니다. 소집단 사회학, 팀 과학, 조직 행동론, 제도 경제학의 틀이 <strong>AI 시스템 설계의 청사진</strong>으로 직접 활용될 수 있습니다. 아직 이 연구의 거의 어느 것도 AI 추론에 적용되지 않았다는 점은, 동시에 거대한 연구 기회를 의미합니다. 연구자들은 에이전트 팀 구성, 역할 분화, 갈등 해소, 집단 의사 결정에 관한 사회과학적 이론을 AI 아키텍처에 적용하는 연구를 시작할 수 있습니다.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:white">
+  <div class="container">
+    <span class="sl">자주 묻는 질문</span>
+    <h2 class="st">논문의 핵심 개념 Q&A</h2>
+    <div class="faq-list">
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)"><span>"사고의 사회"는 어떻게 발견됐나요?</span><span class="fi-icon">+</span></button>
+        <div class="fa"><div class="fa-body">Kim, Lai, Scherrer 등의 연구(arXiv:2601.10825, 2026)에서 밝혀졌습니다. 연구팀은 DeepSeek-R1과 QwQ-32B 같은 프론티어 추론 모델이 단순히 "더 오래 생각"해서가 아니라, <strong>자신의 사고 연쇄 내에서 다중 에이전트 상호작용을 시뮬레이션</strong>함으로써 개선된다는 것을 보였습니다. 이 대화적 구조는 어려운 추론 과제에서 모델의 정확도 우위를 인과적으로 설명합니다. 놀라운 점은 이 모델들이 이런 사고의 사회를 생성하도록 훈련받지 않았다는 것입니다 — 이는 강화 학습이 추론 정확도만을 보상할 때 자발적으로 출현한 창발적 행동입니다.</div></div>
+      </div>
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)"><span>"단일 특이점" 비전의 무엇이 틀렸나요?</span><span class="fi-icon">+</span></button>
+        <div class="fa"><div class="fa-body">저자들은 Vinge와 Kurzweil의 전통적 특이점 개념이 <strong>두 가지 근본적 가정에서 틀렸다</strong>고 주장합니다. 첫째, 지능은 단일한 양이 아니라 고차원적이고 관계적입니다. "인간 수준"이 무엇인지조차 불분명한데, 우리의 지능이 이미 집단적 속성이지 개인적 속성이 아니기 때문입니다. 둘째, 이전의 모든 주요 지능 폭발은 개인 인지 하드웨어 업그레이드가 아닌 새로운 사회적으로 집합된 인지 단위의 출현이었습니다. AI도 같은 패턴을 따를 것입니다.</div></div>
+      </div>
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)"><span>"제도적 정렬"은 RLHF와 어떻게 다른가요?</span><span class="fi-icon">+</span></button>
+        <div class="fa"><div class="fa-body">RLHF(인간 피드백 강화 학습)는 <strong>부모-자녀 교정 모델</strong>을 닮았습니다 — 근본적으로 이원적(dyadic)이며, 수십억 개의 에이전트로 확장될 수 없습니다. "제도적 정렬"은 대안입니다: 인간 사회가 개인적 덕성이 아닌 영속적인 제도적 틀(법정, 시장, 관료제)에 의존하듯, AI 생태계도 역할과 규범으로 정의된 디지털 등가물을 필요로 합니다. 어떤 에이전트의 정체성보다 역할 프로토콜을 이행하는 능력이 중요합니다 — "판사"가 누구인지가 아니라 "판사"라는 역할 자체가 시스템을 기능하게 하는 것처럼.</div></div>
+      </div>
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)"><span>이 논문의 저자들은 누구이며 왜 Google에서 나왔나요?</span><span class="fi-icon">+</span></button>
+        <div class="fa"><div class="fa-body">세 저자는 Google의 "Paradigms of Intelligence Team" 소속입니다. <strong>James Evans</strong>는 시카고 대학교 사회학 교수이자 산타페 연구소 연구원으로, AI와 과학의 사회학을 연구합니다. <strong>Benjamin Bratton</strong>은 UC 샌디에이고 교수이자 Antikythera·Berggruen Institute 소속으로, 기술 철학과 지정학적 디자인을 연구합니다. <strong>Blaise Agüera y Arcas</strong>는 Google Research 부사장이자 산타페 연구소 연구원으로, AI의 본질에 관한 책을 MIT Press에서 출판한 과학자입니다. 이들의 조합은 컴퓨터 과학, 사회학, 기술 철학의 교차점에서 이 논문이 탄생했음을 보여줍니다.</div></div>
+      </div>
+
+      <div class="fi">
+        <button class="fq" onclick="toggleFaq(this)"><span>"지능 폭발은 이미 여기 있다"는 무슨 의미인가요?</span><span class="fi-icon">+</span></button>
+        <div class="fa"><div class="fa-body">저자들은 결론에서 매우 강력한 주장을 합니다: <strong>지능 폭발은 이미 진행 중</strong>이라는 것입니다 — 모든 추론 모델 내부에서 토론하는 사고의 사회에서, 모든 지식 직업을 재형성하는 센타우르 워크플로에서, 규모에서 분기하고 협력하기 시작하는 재귀적 에이전트 생태계에서, 우리가 지금 묻기 시작해야 하는 헌법적 질문들에서. 질문은 지능이 근본적으로 더 강력해질 것인지가 아니라, 우리가 지능이 되어가는 것에 걸맞은 사회적 인프라를 구축할 것인지입니다.</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CITATION -->
+<section class="cite-section" id="citation">
+  <div class="container">
+    <span class="sl">참고문헌</span>
+    <h2 class="st">원문 논문 정보</h2>
+    <div class="cite-box">Evans, J., Bratton, B., & Agüera y Arcas, B. (2026). <em>Agentic AI and the next intelligence explosion.</em> arXiv preprint arXiv:2603.20639. https://doi.org/10.48550/arXiv.2603.20639</div>
+    <button class="cbtn" id="cpBtn" onclick="copyCite()">📋 APA 인용 복사</button>
+    <div class="info-box">
+      <p>
+        📅 게재: 2026년 3월 21일 &nbsp;|&nbsp; 📂 분야: cs.AI (Artificial Intelligence)<br>
+        🏛️ 소속: Google Paradigms of Intelligence Team · 시카고 대학교 · 산타페 연구소 · Antikythera, Berggruen Institute · UC 샌디에이고<br>
+        🔓 오픈 액세스: arXiv 프리프린트 무료 공개 &nbsp;|&nbsp; <a href="https://arxiv.org/abs/2603.20639" target="_blank">arXiv 바로가기</a><br>
+        📖 관련 연구: Kim et al. (2026). Reasoning Models Generate Societies of Thought. <a href="https://arxiv.org/abs/2601.10825" target="_blank">arXiv:2601.10825</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>이 페이지는 Evans, Bratton & Agüera y Arcas (2026)의 연구를 기반으로 교육 목적으로 제작되었습니다. &nbsp;|&nbsp; <a href="https://donghunc.kr/blog/" target="_blank">donghunc.kr/blog</a> &nbsp;|&nbsp; 광운대학교</p>
+</footer>
+
+<script>
+// ── BASICS ──
+window.addEventListener('scroll',()=>{
+  const p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+  document.getElementById('prog').style.width=p+'%';
+  document.getElementById('btt').classList.toggle('show',window.scrollY>400);
+});
+document.getElementById('btt').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.getElementById('ham').onclick=()=>document.getElementById('mob').classList.toggle('open');
+function cm(){document.getElementById('mob').classList.remove('open')}
+
+// REVEAL
+const obs=new IntersectionObserver(es=>es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('vis'),i*80)}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// IDEA CARDS TOGGLE
+function toggleIdea(btn){
+  const card=btn.closest('.idea-card');
+  const isOpen=card.classList.contains('expanded');
+  document.querySelectorAll('.idea-card').forEach(c=>{c.classList.remove('expanded');c.querySelector('.idea-toggle').textContent='+ 더 보기'});
+  if(!isOpen){card.classList.add('expanded');btn.textContent='− 접기'}
+}
+
+// FAQ
+function toggleFaq(btn){
+  const item=btn.closest('.fi');
+  const ans=item.querySelector('.fa');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.fi.open').forEach(i=>{i.classList.remove('open');i.querySelector('.fa').style.maxHeight='0'});
+  if(!isOpen){item.classList.add('open');ans.style.maxHeight=ans.scrollHeight+'px'}
+}
+
+// IMPL ACCORDION
+function toggleImpl(btn){
+  const item=btn.closest('.ia');
+  const ans=item.querySelector('.ians');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.ia.open').forEach(i=>{i.classList.remove('open');i.querySelector('.ians').style.maxHeight='0'});
+  if(!isOpen){item.classList.add('open');ans.style.maxHeight=ans.scrollHeight+'px'}
+}
+
+// ── SOCIETY OF THOUGHT SIMULATOR ──
+function setTopic(t){
+  document.getElementById('sotInput').value=t;
+}
+
+const debates={
+  'AI가 인간 일자리를 대체할 것인가?':[
+    {r:'a',s:'분석가 관점',t:'역사적 데이터를 보면, 기술 혁명은 일부 직업을 없애지만 동시에 새로운 직업 범주를 창출합니다. AI는 반복적·정형화된 업무를 자동화하지만, 창의성·공감·복잡한 판단이 필요한 영역은 인간이 강점을 유지할 가능성이 높습니다.'},
+    {r:'b',s:'회의론자 관점',t:'이번에는 다릅니다. 과거 자동화는 근육을 대체했지만 AI는 인지 노동을 대체합니다. Stanford AI Index 2026에 따르면 22-25세 소프트웨어 개발자 고용이 이미 20% 감소했습니다. 지식 노동 전반에 걸쳐 유사한 패턴이 나타날 수 있습니다.'},
+    {r:'c',s:'종합자 관점',t:'Evans 등(2026)의 프레임이 유용합니다 — 핵심은 대체가 아닌 재구성입니다. "센타우르" 패턴이 지배적이 될 것입니다: AI를 도구로 활용하는 인간의 생산성이 극적으로 향상되어, AI만이나 인간만보다 훨씬 강력한 복합 행위자가 됩니다. 질문은 "누가 살아남는가"가 아니라 "어떤 새로운 협력 양식이 등장하는가"입니다.'},
+    {r:'a',s:'분석가 관점',t:'보완적 관점에서, 의사·변호사·교육자처럼 고도의 인간적 판단이 필요한 직업은 오히려 AI 도구의 도움을 받아 더 나은 서비스를 제공할 것입니다. 그러나 단순 행정, 기초 데이터 분석, 반복적 콘텐츠 생성 업무는 상당한 구조 변화를 겪을 것입니다.'},
+  ],
+  'AGI는 인류에게 위협인가 기회인가?':[
+    {r:'a',s:'분석가 관점',t:'AGI의 위험성 논의는 종종 단일 초지능 가정에서 출발합니다. 그러나 Evans 등(2026)이 설득력 있게 주장하듯, 이 가정 자체가 틀렸을 수 있습니다. 지능은 고차원적이고 관계적이며, "AGI"는 단일한 점이 아닌 분산된 생태계로 나타날 가능성이 높습니다.'},
+    {r:'b',s:'회의론자 관점',t:'낙관론을 경계해야 합니다. AI 사고 건수는 2024년 233건에서 2025년 362건으로 급증했습니다(Stanford AI Index). 더 강력한 시스템은 더 큰 실패 모드를 낳습니다. 책임 있는 AI 개발과 거버넌스가 역량 발전을 따라가지 못하는 것이 가장 심각한 위협입니다.'},
+    {r:'c',s:'종합자 관점',t:'위협과 기회는 이분법이 아닙니다. The AI Scientist(Nature 2026)처럼 AI가 과학 연구를 가속화하는 것은 명백한 기회입니다. 동시에 논문이 강조하듯 "감사자를 감사하는 것은 누구인가?"라는 거버넌스 질문을 해결하지 못하면 위협이 됩니다. 핵심은 기술이 아니라 우리가 구축하는 사회 인프라입니다.'},
+  ],
+  'AI 에이전트 사회에서 인간의 역할은?':[
+    {r:'b',s:'회의론자 관점',t:'수십억 개의 AI 에이전트가 자율적으로 분기하고 협력하는 세계에서 인간 감독은 가능한가요? 각 에이전트가 복사본을 생성하고 하위 에이전트를 스폰하는 재귀적 구조에서, 인간이 실질적인 통제권을 유지하기가 점점 어려워질 것입니다.'},
+    {r:'a',s:'분석가 관점',t:'역사적 패러독스가 있습니다 — 수메르 서기는 자신이 운영하는 곡물 회계 시스템의 거시경제적 기능을 이해하지 못했지만, 시스템은 여전히 인간 사회의 목적을 위해 기능했습니다. 인간의 역할은 모든 에이전트를 직접 감독하는 것이 아니라, 제도적 틀과 목적을 설정하는 것일 수 있습니다.'},
+    {r:'c',s:'종합자 관점',t:'Evans 등(2026)의 핵심 통찰이 여기 있습니다 — 인간은 에이전트 제도의 설계자이자 구성원입니다. "어느 쪽/또는"이 아닌 "둘 다/그리고"입니다. 미국 건국 아버지들의 논리가 적용됩니다: 어떤 단일한 지능 집중도 — 인간이든 인공이든 — 스스로를 규제해선 안 됩니다. 권력은 권력을 견제해야 합니다.'},
+    {r:'a',s:'분석가 관점',t:'인간의 독보적 역할은 가치 설정, 목적 정의, 윤리적 판단에 있을 것입니다. AI 에이전트는 수단의 최적화에 뛰어나지만, 어떤 목적을 추구할 것인지의 결정은 인간 사회의 집단적 선택으로 남을 것입니다.'},
+  ],
+  'AI 거버넌스는 어떻게 설계해야 하나?':[
+    {r:'a',s:'분석가 관점',t:'논문이 제시하는 "제도적 정렬" 개념이 핵심입니다. RLHF처럼 개별 에이전트를 훈련하는 것보다, 에이전트가 작동하는 제도적 프레임워크를 설계하는 것이 확장 가능한 접근입니다. 법정이 판사 개인에 의존하지 않고 역할 시스템에 의존하듯이.'},
+    {r:'b',s:'회의론자 관점',t:'제도적 설계의 실현 가능성에 의문이 있습니다. 국제적 조율 없이 한 국가의 AI 거버넌스는 효과적이지 않습니다. 게다가 AI 기술은 어떤 규제 프레임워크보다 빠르게 발전합니다. 한국이 AI 기본법을 제정했지만, 법이 현실을 따라잡기 어렵습니다.'},
+    {r:'c',s:'종합자 관점',t:'논문의 제안처럼 거버넌스는 정부의 법만이 아닙니다. 사이버네틱 의미에서의 거버넌스 시스템이 에이전트-에이전트, 인간-에이전트 시스템에 내장되어야 합니다. 결과 검증, 절차적 작업 위임, 섬세한 에이전트 간 협력 자동화를 위한 신뢰할 수 있는 비계. 이런 프로토콜이 어떤 법률만큼이나 실질적인 효과를 가질 것입니다.'},
+  ],
+};
+
+function startDebate(){
+  const topic=document.getElementById('sotInput').value.trim();
+  if(!topic)return;
+  const chat=document.getElementById('sotChat');
+  const btn=document.getElementById('sotBtn');
+  chat.innerHTML='';
+  btn.disabled=true;
+
+  const msgs=debates[topic]||generateGeneric(topic);
+  let i=0;
+  function addMsg(){
+    if(i>=msgs.length){btn.disabled=false;return}
+    const m=msgs[i];
+    const el=document.createElement('div');
+    el.className=`sot-msg ${m.r}`;
+    el.innerHTML=`<div class="sot-speaker">${m.r==='a'?'🔴 분석가':m.r==='b'?'🔵 회의론자':'🟡 종합자'} · ${m.s}</div><div class="sot-msg-text">${m.t}</div>`;
+    el.style.animationDelay=`${i*0.1}s`;
+    chat.appendChild(el);
+    chat.scrollTop=chat.scrollHeight;
+    i++;
+    setTimeout(addMsg, 1100);
+  }
+  const sys=document.createElement('div');
+  sys.className='sot-msg sys';
+  sys.innerHTML=`<div class="sot-msg-text">💭 "${topic}"에 대한 사고의 사회가 시작됩니다...</div>`;
+  chat.appendChild(sys);
+  setTimeout(addMsg, 800);
+}
+
+function generateGeneric(topic){
+  return[
+    {r:'a',s:'분석가 관점',t:`"${topic}"는 에이전틱 AI 시대의 핵심 질문입니다. 역사적 맥락에서 보면, 이전의 지능 폭발들은 모두 새로운 사회적 집합 인지 단위의 출현을 통해 이루어졌습니다. 이 주제도 사회적·집단적 차원에서 분석할 필요가 있습니다.`},
+    {r:'b',s:'회의론자 관점',t:`"${topic}"를 낙관적으로만 바라보는 것은 위험합니다. Evans 등(2026)이 경고하듯, 규모에서 작동하는 AI 시스템은 예상치 못한 창발적 행동을 보일 수 있습니다. 제도적 안전장치와 견제·균형 메커니즘이 먼저 설계되어야 합니다.`},
+    {r:'c',s:'종합자 관점',t:`"${topic}"에 대한 가장 유용한 접근은 "어느 쪽/또는"이 아닌 "둘 다/그리고"의 프레임입니다. 지능은 고차원적이고 관계적입니다 — 단일한 답이 없습니다. 핵심은 인간과 AI가 함께 구성하는 사회적 인프라를 어떻게 설계할 것인가에 있습니다.`},
+  ];
+}
+
+// ── COPY CITE ──
+function copyCite(){
+  const t='Evans, J., Bratton, B., & Agüera y Arcas, B. (2026). Agentic AI and the next intelligence explosion. arXiv preprint arXiv:2603.20639. https://doi.org/10.48550/arXiv.2603.20639';
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.getElementById('cpBtn');
+    b.textContent='✅ 복사 완료!';b.classList.add('done');
+    setTimeout(()=>{b.textContent='📋 APA 인용 복사';b.classList.remove('done')},2500);
+  });
+}
+</script>
+</body>
+</html>
